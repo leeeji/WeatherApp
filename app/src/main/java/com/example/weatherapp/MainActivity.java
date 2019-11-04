@@ -35,13 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView UpdateBtn;
     private String updateCityCode;
     private ImageView SelectCityBtn;
+    private ImageView ShareBtn;
 
     TodayWeather todayWeather = null;
 
     private TextView cityT,timeT,humidityT,weekT,pmDataT,pmQualityT,temperatureT,climateT,windT,cityNameT;
 
-//    private  TextView week1T,week2T,week3T,temperature1T,temperature2T,temperature3T,
-//            wind1T,wind2T,wind3T,climate1T,climate2T,climate3T;
+//    private TextView week1T,week2T,week3T,temperature1T,temperature2T,temperature3T,
+//             wind1T,wind2T,wind3T,climate1T,climate2T,climate3T;
     private ImageView weatherImg,PM25Img;
 
 
@@ -77,15 +78,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SelectCityBtn = (ImageView)findViewById(R.id.title_city_manager);
         SelectCityBtn.setOnClickListener(this);
 
+        ShareBtn = (ImageView)findViewById(R.id.title_city_share);
+        ShareBtn.setOnClickListener(this);
+
 
         initView();
+        //list被点击时的处理
+        updateCityCode = getIntent().getStringExtra("citycode02");
 
-        updateCityCode = getIntent().getStringExtra("citycode");
         if(updateCityCode!="-1"){
-
+            //CityCode03 = updateCityCode;
             getWeatherDatafromNet(updateCityCode);
 
         }
+        getWeatherDatafromNet(getIntent().getStringExtra("citycode"));
+
 
         //网络连接
         if(CheckNet.getNetState(this)==CheckNet.NET_NONE){
@@ -159,6 +166,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this,SelectCity.class);
             startActivity(intent);
         }
+        if(v.getId()==R.id.title_city_share){
+            Intent intent = new Intent(this,MoreImfActivity.class);
+            startActivity(intent);
+
+        }
     }
 
 
@@ -166,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TodayWeather parseXML(String xmlData)
     {
-
+        TodayWeather todayWeather = null;
 
         int fengliCount = 0;
         int fengxiangCount = 0;
@@ -272,12 +284,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                                todayWeather.setType1(xmlPullParser.getText());
 //                                Log.d("future1 type",xmlPullParser.getText());
 //                                typeCount++;
-//                            } else if(xmlPullParser.getName().equals("fengli") && fengliCount == 1) {
+//                            } else if(xmlPullParser.getName().equals("fengli") && fengliCount == 1){
 //                                eventType = xmlPullParser.next();
 //                                todayWeather.setFengli1(xmlPullParser.getText());
-//                                Log.d("future1 fengli", xmlPullParser.getText());
+//                                Log.d("future1 fengli",xmlPullParser.getText());
 //                                fengliCount++;
-//                            }
 //                            } else if( xmlPullParser.getName().equals("date") && dateCount == 2){
 //                                eventType = xmlPullParser.next();
 //                                Log.d("future2 date",xmlPullParser.getText());
@@ -362,7 +373,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         weatherImg = (ImageView)findViewById(R.id.todayinfo2_weatherStatusImg);
         PM25Img = (ImageView)findViewById(R.id.todayinfo1_pm25img);
-
+//
+//        //future
+//        week1T = (TextView)findViewById(R.id.future3_no1_week);
+//        temperature1T = (TextView)findViewById(R.id.future3_no1_temperature);
+//        climate1T = (TextView)findViewById(R.id.future3_no1_weatherState);
+//        wind1T = (TextView)findViewById(R.id.future3_no1_wind);
+//
+//        week2T = (TextView)findViewById(R.id.future3_no2_week);
+//        temperature2T = (TextView)findViewById(R.id.future3_no2_temperature);
+//        climate2T = (TextView)findViewById(R.id.future3_no2_weatherState);
+//        wind2T = (TextView)findViewById(R.id.future3_no2_wind);
+//
+//        week3T = (TextView)findViewById(R.id.future3_no3_week);
+//        temperature3T = (TextView)findViewById(R.id.future3_no3_temperature);
+//        climate3T = (TextView)findViewById(R.id.future3_no3_weatherState);
+//        wind3T = (TextView)findViewById(R.id.future3_no3_wind);
 
         cityNameT.setText("N/A");
 
@@ -375,6 +401,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temperatureT.setText("N/A");
         climateT.setText("N/A");
         windT.setText("N/A");
+//        week1T.setText("N/A");
+//        temperature1T.setText("N/A");
+//        climate1T.setText("N/A");
+//        wind1T.setText("N/A");
+//
+//        week2T.setText("N/A");
+//        temperature2T.setText("N/A");
+//        climate2T.setText("N/A");
+//        wind2T.setText("N/A");
+//
+//        week3T.setText("N/A");
+//        temperature3T.setText("N/A");
+//        climate3T.setText("N/A");
+//        wind3T.setText("N/A");
     }
 
     void updateTodayWeather(TodayWeather todayWeather)
